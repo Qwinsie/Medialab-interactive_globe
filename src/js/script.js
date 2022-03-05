@@ -1,11 +1,16 @@
 import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js';
 import {OrbitControls} from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/GLTFLoader.js";
+import { EffectComposer } from 'https://unpkg.com/three@0.126.1/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'https://unpkg.com/three@0.126.1/examples/jsm/postprocessing/RenderPass.js';
+import { GlitchPass } from 'https://unpkg.com/three@0.126.1/examples/jsm/postprocessing/GlitchPass.js';
 
 let THREEx
 let isRotating = true;
 let pauseStatus = false;
 const scene = new THREE.Scene();
+
+let sphereAsset = 'assets/globe.png';
 
 let rotationSpeed = 5
 let direction = 1;
@@ -13,6 +18,8 @@ let direction = 1;
 let counterClockwise = document.getElementById('counterClockwise');
 let pause = document.getElementById('pause');
 let clockwise = document.getElementById('clockwise');
+let center = document.getElementById('center');
+
 
 THREEx = THREEx || {}
 THREEx.Planets	= {}
@@ -29,7 +36,7 @@ THREEx.Planets.createEarth	= function() {
         material.needsUpdate = true;
     }
 
-    setTexture(loader.load('assets/globe.png'));
+    setTexture(loader.load(sphereAsset));
 
     let mesh = new THREE.Mesh(geometry, material)
     return mesh;
@@ -54,7 +61,7 @@ function resize() {
 window.addEventListener('resize', resize, false);
 resize();
 
-var ambientLight = new THREE.AmbientLight( 0xF8F8F8, 1,100 );
+var ambientLight = new THREE.AmbientLight( 0xF8F8F8, 1.5,0,0 );
 scene.add( ambientLight );
 
 let earthMesh = THREEx.Planets.createEarth()
@@ -71,7 +78,7 @@ function initControls() {
     //*
     controls.minDistance = 1.5;
     controls.maxDistance = 10;
-    controls.enablePan = false;
+    controls.enablePan = true;
     let rotateSpeed = .08,
         zoomSpeed = .2;
 
@@ -158,17 +165,8 @@ function getLocation() {
 }
 
 function usePosition(position){
-
-    let spriteMap = new THREE.TextureLoader().load( "assets/among_us.png" );
-    let spriteMaterial = new THREE.SpriteMaterial( { map: spriteMap, color: 0xffffff } );
-    let sprite = new THREE.Sprite( spriteMaterial );
-
-    let location = latLongToVector3(position.coords.latitude,position.coords.longitude,1,0.02)
-    sprite.position.set(location['x'],location['y'],location['z'])
-
-    sprite.addEventListener('click',function (){console.log('hello')})
-    sprite.scale.set(0.1, 0.1, 1)
-    earthMesh.add( sprite );
+    let location = latLongToVector3(position.coords.latitude,position.coords.longitude,1,0.00002)
+    addModel(location)
 }
 
 function latLongToVector3(lat, lon, radius, heigth) {
@@ -214,31 +212,40 @@ counterClockwise.addEventListener('click',function (){
     direction = -1;
 })
 
-function addModel() {
+center.addEventListener('click',function (){
+    console.log('hello')
+    earthMesh.geometry.center();
+})
 
-    //let texture = new THREE.TextureLoader();
-    let texture = new THREE.TextureLoader().load( 'assets/liberty.png' );
+
+
+function addModel(position) {
+
+    let texture = new THREE.TextureLoader();
+    //let texture = new THREE.TextureLoader().load( 'https://cdn.cloudflare.steamstatic.com/steam/apps/945360/capsule_616x353.jpg?t=1646296970' );
     texture.flipY = false;
     texture.encoding = THREE.sRGBEncoding;
 
     console.log(texture)
 
     const loader = new GLTFLoader();
-    loader.load( 'assets/models/untitled.glb', function ( gltf ) {
+    loader.load( 'assets/models/male_standing.glb', function ( gltf ) {
 
         var model = gltf.scene;
 
-        model.position.set(0.6286700768275177, 0.8019206556034664, -0.04579515933141644)
-        model.scale.set(0.1, 0.1, 0.1)
+        model.position.set(position['x'], position['y'], position['z'])
+        let scale = 0.02;
+        model.scale.set(scale,scale,scale)
+        model.rotateY(90)
 
-        model.traverse ( ( o ) => {
-            if ( o.isMesh ) {
-                // note: for a multi-material mesh, `o.material` may be an array,
-                // in which case you'd need to set `.map` on each value.
-                console.log(o.material)
-                o.material.map = texture;
-            }
-        } );
+        // model.traverse ( ( o ) => {
+        //     if ( o.isMesh ) {
+        //         // note: for a multi-material mesh, `o.material` may be an array,
+        //         // in which case you'd need to set `.map` on each value.
+        //         console.log(o.material)
+        //         o.material.map = texture;
+        //     }
+        // } );
 
         earthMesh.add( model );
 
@@ -249,6 +256,4 @@ function addModel() {
     } );
 
 }
-
-addModel();
 
