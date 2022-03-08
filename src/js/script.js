@@ -36,6 +36,8 @@ THREEx.Planets.createEarth	= function() {
     setTexture(loader.load(sphereAsset));
 
     let mesh = new THREE.Mesh(geometry, material)
+    //this works
+    //mesh.userData = {planet:'test'}
     return mesh;
 }
 
@@ -223,14 +225,16 @@ function addModel(position,asset,scale) {
     const loader = new GLTFLoader();
     loader.load( 'assets/models/' + asset, function ( gltf ) {
 
-        console.log(gltf)
-
         var model = gltf.scene;
+
+        console.log(model)
 
         model.position.set(position['x'], position['y'], position['z'])
         model.scale.set(scale,scale,scale)
         model.rotateY(90)
-        gltf.userData = {test:'TEST'};
+        model.userData = { test:'TEST' };
+
+        console.log(model)
 
         earthMesh.add( model );
 
@@ -259,9 +263,9 @@ function onClick( event ) {
     var intersects = raycaster.intersectObjects( scene.children, true );
 
     if ( intersects.length > 0 ) {
-
-        console.log( 'Intersection:', intersects[ 0 ] );
-
+        if(intersects[ 0 ]['object']['parent']['parent'] !== null) {
+            console.log('Intersection:', intersects[0]['object']['parent']['parent']);
+        }
     }
 
 }
