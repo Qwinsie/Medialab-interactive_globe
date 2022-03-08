@@ -166,7 +166,7 @@ function getLocation() {
 
 function usePosition(position){
     let location = latLongToVector3(position.coords.latitude,position.coords.longitude,1,0.00002)
-    addModel(location)
+    addModel(location,'male_standing.glb',0.03)
 }
 
 function latLongToVector3(lat, lon, radius, heigth) {
@@ -214,12 +214,12 @@ counterClockwise.addEventListener('click',function (){
 
 center.addEventListener('click',function (){
     console.log('hello')
-    earthMesh.geometry.center();
+    controls.reset();
 })
 
 
 
-function addModel(position) {
+function addModel(position,asset,scale) {
 
     let texture = new THREE.TextureLoader();
     //let texture = new THREE.TextureLoader().load( 'https://cdn.cloudflare.steamstatic.com/steam/apps/945360/capsule_616x353.jpg?t=1646296970' );
@@ -229,12 +229,11 @@ function addModel(position) {
     console.log(texture)
 
     const loader = new GLTFLoader();
-    loader.load( 'assets/models/male_standing.glb', function ( gltf ) {
+    loader.load( 'assets/models/' + asset, function ( gltf ) {
 
         var model = gltf.scene;
 
         model.position.set(position['x'], position['y'], position['z'])
-        let scale = 0.02;
         model.scale.set(scale,scale,scale)
         model.rotateY(90)
 
