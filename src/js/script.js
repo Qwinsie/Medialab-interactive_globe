@@ -229,9 +229,16 @@ function addModel(position,asset,scale) {
 
         console.log(model)
 
+        console.log(position['y'] + 0.1)
+
         model.position.set(position['x'], position['y'], position['z'])
         model.scale.set(scale,scale,scale)
         model.rotateY(90)
+
+        //convert y (between 1 and -1) to a value between 0 and 180
+        let angle = 180 * 0.0174533;
+
+        model.rotateX(angle)
         model.userData = { test:'TEST' };
 
         console.log(model)

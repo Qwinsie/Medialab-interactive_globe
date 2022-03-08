@@ -1,0 +1,21 @@
+{
+  "locations": [
+    {
+      "id": 0,
+      "coordinates": {
+        "latitude":0,
+        "longitude":0
+      },
+      "asset": "test",
+      "scale": 1,
+      "waterStats": {
+        "calcium": 0,
+        "sodium": 0,
+        "chlorine": 0,
+        "ph": 0,
+        "magnesium": 0
+      }
+    }
+
+  ]
+}
