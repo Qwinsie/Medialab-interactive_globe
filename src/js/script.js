@@ -1,9 +1,6 @@
 import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js';
-import {OrbitControls} from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js";
+import { OrbitControls } from "https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.126.1/examples/jsm/loaders/GLTFLoader.js";
-import { EffectComposer } from 'https://unpkg.com/three@0.126.1/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'https://unpkg.com/three@0.126.1/examples/jsm/postprocessing/RenderPass.js';
-import { GlitchPass } from 'https://unpkg.com/three@0.126.1/examples/jsm/postprocessing/GlitchPass.js';
 
 let THREEx
 let isRotating = true;
@@ -217,34 +214,23 @@ center.addEventListener('click',function (){
     controls.reset();
 })
 
-
-
 function addModel(position,asset,scale) {
 
     let texture = new THREE.TextureLoader();
-    //let texture = new THREE.TextureLoader().load( 'https://cdn.cloudflare.steamstatic.com/steam/apps/945360/capsule_616x353.jpg?t=1646296970' );
     texture.flipY = false;
     texture.encoding = THREE.sRGBEncoding;
 
-    console.log(texture)
-
     const loader = new GLTFLoader();
     loader.load( 'assets/models/' + asset, function ( gltf ) {
+
+        console.log(gltf)
 
         var model = gltf.scene;
 
         model.position.set(position['x'], position['y'], position['z'])
         model.scale.set(scale,scale,scale)
         model.rotateY(90)
-
-        // model.traverse ( ( o ) => {
-        //     if ( o.isMesh ) {
-        //         // note: for a multi-material mesh, `o.material` may be an array,
-        //         // in which case you'd need to set `.map` on each value.
-        //         console.log(o.material)
-        //         o.material.map = texture;
-        //     }
-        // } );
+        gltf.userData = {test:'TEST'};
 
         earthMesh.add( model );
 
@@ -256,3 +242,26 @@ function addModel(position,asset,scale) {
 
 }
 
+window.addEventListener('click', onClick, false);
+
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2()
+
+function onClick( event ) {
+
+    event.preventDefault();
+
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+    raycaster.setFromCamera( mouse, camera );
+
+    var intersects = raycaster.intersectObjects( scene.children, true );
+
+    if ( intersects.length > 0 ) {
+
+        console.log( 'Intersection:', intersects[ 0 ] );
+
+    }
+
+}
