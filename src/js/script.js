@@ -165,7 +165,7 @@ function getLocation() {
 
 function usePosition(position){
     let location = latLongToVector3(position.coords.latitude,position.coords.longitude,1,0.00002)
-    addModel(location,'male_standing.glb',0.03)
+    addModel(location,'male_standing.glb',0.03,{test:'test'},90,20)
 }
 
 function latLongToVector3(lat, lon, radius, heigth) {
@@ -216,7 +216,7 @@ center.addEventListener('click',function (){
     controls.reset();
 })
 
-function addModel(position,asset,scale) {
+function addModel(position,asset,scale,data,rotY,rotX) {
 
     let texture = new THREE.TextureLoader();
     texture.flipY = false;
@@ -233,13 +233,9 @@ function addModel(position,asset,scale) {
 
         model.position.set(position['x'], position['y'], position['z'])
         model.scale.set(scale,scale,scale)
-        model.rotateY(90)
-
-        //convert y (between 1 and -1) to a value between 0 and 180
-        let angle = 180 * 0.0174533;
-
-        //model.rotateX(angle)
-        model.userData = { test:'TEST' };
+        model.rotateY(degToRad(rotY))
+        model.rotateX(degToRad(rotX))
+        model.userData = data;
 
         console.log(model)
 
@@ -271,8 +267,36 @@ function onClick( event ) {
 
     if ( intersects.length > 0 ) {
         if(intersects[ 0 ]['object']['parent']['parent'] !== null) {
-            console.log('Intersection:', intersects[0]['object']['parent']['parent']);
+            console.log('Intersection:', intersects[0]['object']['parent']['parent']['userData']);
         }
     }
 
+}
+
+function readTextFile(file, callback) {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState === 4 && rawFile.status == "200") {
+            callback(rawFile.responseText);
+        }
+    }
+    rawFile.send(null);
+}
+
+readTextFile("assets/json/locationData.json", function(text){
+    var data = JSON.parse(text);
+    console.log(data);
+
+    data['locations'].forEach(function(point){
+
+        let location = latLongToVector3(point['coordinates']['latitude'],point['coordinates']['longitude'],1,0.00002)
+
+        addModel(location,point['asset'],point['scale'],{test:'building'},point['rotateY'],point['rotateX'])
+    })
+});
+
+function degToRad(degrees){
+    return degrees * 0.0174533
 }

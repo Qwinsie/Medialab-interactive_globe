@@ -1,21 +1,27 @@
 {
+
   "locations": [
     {
       "id": 0,
       "coordinates": {
-        "latitude":0,
-        "longitude":0
+        "latitude":29.4310487,
+        "longitude":-98.3656798
       },
-      "asset": "test",
-      "scale": 1,
-      "waterStats": {
-        "calcium": 0,
-        "sodium": 0,
-        "chlorine": 0,
-        "ph": 0,
-        "magnesium": 0
-      }
+      "asset": "2Story_Wide_Mat.glb",
+      "scale": 0.03,
+      "rotateY": -5,
+      "rotateX": 60
+    },
+    {
+      "id": 1,
+      "coordinates": {
+        "latitude":-25.6841664,
+        "longitude":129.8789365
+      },
+      "asset": "flags/Test_Flag.glb",
+      "scale": 0.03,
+      "rotateY": 230,
+      "rotateX": 130
     }
-
   ]
 }
