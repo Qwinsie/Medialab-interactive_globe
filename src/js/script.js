@@ -227,17 +227,11 @@ function addModel(position,asset,scale,data,rotY,rotX) {
 
         var model = gltf.scene;
 
-        console.log(model)
-
-        console.log(position['y'] + 0.1)
-
         model.position.set(position['x'], position['y'], position['z'])
         model.scale.set(scale,scale,scale)
         model.rotateY(degToRad(rotY))
         model.rotateX(degToRad(rotX))
         model.userData = data;
-
-        console.log(model)
 
         earthMesh.add( model );
 
@@ -258,8 +252,9 @@ function onClick( event ) {
 
     event.preventDefault();
 
-    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    var rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ( ( event.clientX - rect.left ) / ( rect.right - rect.left ) ) * 2 - 1;
+    mouse.y = - ( ( event.clientY - rect.top ) / ( rect.bottom - rect.top) ) * 2 + 1;
 
     raycaster.setFromCamera( mouse, camera );
 
@@ -268,6 +263,9 @@ function onClick( event ) {
     if ( intersects.length > 0 ) {
         if(intersects[ 0 ]['object']['parent']['parent'] !== null) {
             console.log('Intersection:', intersects[0]['object']['parent']['parent']['userData']);
+
+            displayData(intersects[0]['object']['parent']['parent']['userData']);
+
         }
     }
 
@@ -293,10 +291,34 @@ readTextFile("assets/json/locationData.json", function(text){
 
         let location = latLongToVector3(point['coordinates']['latitude'],point['coordinates']['longitude'],1,0.00002)
 
-        addModel(location,point['asset'],point['scale'],{test:'building'},point['rotateY'],point['rotateX'])
+        addModel(location,point['asset'],point['scale'], point['userData'] ,point['rotateY'],point['rotateX'])
     })
 });
 
 function degToRad(degrees){
     return degrees * 0.0174533
+}
+
+function displayData(dataObj){
+
+    let bottomPanel = document.getElementById('bottomPanel')
+
+    bottomPanel.innerHTML = "<h3>Waterkwaliteit in: "+dataObj['place']+"</h3>";
+
+
+    for (const [key, value] of Object.entries(dataObj)) {
+
+        if(key == 'place'){
+            continue;
+        }
+
+        console.log(`${key}: ${value}`);
+
+        let bar = '<div class="w3-dark-grey">'+
+            '<div class="w3-container w3-green w3-center" style="width:'+ value +'%">'+ value +'</div>'+
+        '</div><br>';
+
+
+        bottomPanel.innerHTML += bar;
+    }
 }

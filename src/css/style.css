@@ -6,7 +6,7 @@ canvas {
     display: block;
     position: absolute;
     top:0;
-    right:0;
+    left:15vw;
 }
 
 body{
@@ -20,7 +20,8 @@ body{
 #globe_controls{
     position: absolute;
     bottom: 0;
-    width: 100vw;
+    right:0;
+    width: 70vw;
     height:50px;
     z-index: 10;
     padding-bottom:4px;
@@ -52,4 +53,38 @@ input[type=range][orient=vertical]
     width: 8px;
     height: 175px;
     padding: 0 5px;
+}
+
+.panel{
+    height:48.5vh;
+    width: calc(100% - 2vh);
+    position: absolute;
+    margin:1vh;
+    left:0;
+}
+
+#panels hr{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width:95%;
+    left: 2.5%;
+}
+
+#panels{
+    position: absolute;
+    left:0;
+    height:100vh;
+    width:30vw;
+    background-color: #26b4f4;
+}
+
+#topPanel{
+    top:0;
+}
+
+#bottomPanel{
+    bottom:0;
 }
