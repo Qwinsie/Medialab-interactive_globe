@@ -12,7 +12,7 @@
       "rotateX": 60,
       "userData": {
         "place": "Fort Worth Water Department",
-        "temperature": 100,
+        "temperature": 46,
         "ph": 6,
         "kalkpercentage": 20,
         "chloorpercentage": 80
@@ -30,7 +30,7 @@
       "rotateX": 130,
       "userData": {
         "place": "Australië",
-        "temperature": 8.4,
+        "temperature": 46,
         "ph": 7,
         "sodium": 4.2,
         "calcium": 0.4
@@ -48,7 +48,7 @@
       "rotateX": 40,
       "userData": {
         "place": "Frankrijk",
-        "temperature": 100,
+        "temperature": 35,
         "ph": 6.6,
         "kalkpercentage": 20,
         "chloorpercentage": 10
