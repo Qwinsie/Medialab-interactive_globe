@@ -313,7 +313,13 @@ function displayData(dataObj){
 
     bottomPanel.innerHTML = "<h3>Waterkwaliteit in: "+dataObj['place']+"</h3>";
 
+    let status = "<span style='color:red'>Niet drinkbaar</span>"
 
+    if(dataObj['drinkable']){
+        status = "<span style='color:green'>Drinkbaar</span>";
+    }
+
+    bottomPanel.innerHTML += "<h4>Status: "+ status +"</h4>";
 
 
     for (const [key, value] of Object.entries(dataObj['waterData'])) {
