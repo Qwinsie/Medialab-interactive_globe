@@ -12,10 +12,13 @@
       "rotateX": 60,
       "userData": {
         "place": "Fort Worth Water Department",
-        "temperature": 46,
-        "ph": 6,
-        "kalkpercentage": 20,
-        "chloorpercentage": 80
+        "drinkable": false,
+        "waterData": {
+          "temperature": 100,
+          "ph": 6,
+          "kalkpercentage": 20,
+          "chloorpercentage": 80
+        }
       }
     },
     {
@@ -30,16 +33,19 @@
       "rotateX": 130,
       "userData": {
         "place": "Australië",
-        "temperature": 46,
-        "ph": 7,
-        "sodium": 4.2,
-        "calcium": 0.4
+        "drinkable": false,
+        "waterData": {
+          "temperature": 8.4,
+          "ph": 7,
+          "sodium": 4.2,
+          "calcium": 0.4
+        }
       }
     },
     {
       "id": 3,
       "coordinates": {
-        "latitude":46.227638, 
+        "latitude":46.227638,
         "longitude":2.213749
       },
       "asset": "2Story_Wide_Mat.glb",
@@ -48,10 +54,13 @@
       "rotateX": 40,
       "userData": {
         "place": "Frankrijk",
-        "temperature": 35,
-        "ph": 6.6,
-        "kalkpercentage": 20,
-        "chloorpercentage": 10
+        "drinkable": true,
+        "waterData": {
+          "temperature": 100,
+          "ph": 6.6,
+          "kalkpercentage": 20,
+          "chloorpercentage": 10
+        }
       }
     }
   ]
