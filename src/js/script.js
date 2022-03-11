@@ -167,11 +167,14 @@ function usePosition(position){
     let location = latLongToVector3(position.coords.latitude,position.coords.longitude,1,0.00002)
     addModel(location,'male_standing.glb',0.03,
     {
-        "place": "Jouw Buurt",
-        "temperature": 100,
-        "ph": 6,
-        "kalkpercentage": 20,
-        "chloorpercentage": 0
+        "place": "Jouw buurt",
+        "drinkable": true,
+        "hardness": "8dH, hard tot vrij hard kraanwater",
+        "waterData": {
+          "temperature": 6.1,
+          "ph": 2,
+          "chloorpercentage": 0
+        }
     }
     ,90,20)
 }
@@ -318,6 +321,8 @@ function displayData(dataObj){
     if(dataObj['drinkable']){
         status = "<span style='color:green'>Drinkbaar</span>";
     }
+
+    bottomPanel.innerHTML += "<h4>Hardheid: "+dataObj['hardness']+"</h4>";
 
     bottomPanel.innerHTML += "<h4>Status: "+ status +"</h4>";
 

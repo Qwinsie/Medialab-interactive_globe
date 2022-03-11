@@ -13,11 +13,11 @@
       "userData": {
         "place": "Fort Worth Water Department",
         "drinkable": false,
+        "hardness": "6dH, hard kraanwater",
         "waterData": {
-          "temperature": 100,
-          "ph": 6,
-          "kalkpercentage": 20,
-          "chloorpercentage": 80
+          "temperature": 24,
+          "ph": 8.6,
+          "chloorpercentage": 20
         }
       }
     },
@@ -33,12 +33,12 @@
       "rotateX": 130,
       "userData": {
         "place": "Australië",
-        "drinkable": false,
+        "drinkable": true,
+        "hardness": "6dH, hard kraanwater",
         "waterData": {
-          "temperature": 8.4,
-          "ph": 7,
-          "sodium": 4.2,
-          "calcium": 0.4
+          "temperature": 11,
+          "ph": 8.6,
+          "chloorpercentage": 20
         }
       }
     },
@@ -55,10 +55,10 @@
       "userData": {
         "place": "Frankrijk",
         "drinkable": true,
+        "hardness": "10dH, vrij hard kraanwater",
         "waterData": {
-          "temperature": 100,
+          "temperature": 34,
           "ph": 6.6,
-          "kalkpercentage": 20,
           "chloorpercentage": 10
         }
       }
