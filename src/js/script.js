@@ -306,11 +306,9 @@ function displayData(dataObj){
     bottomPanel.innerHTML = "<h3>Waterkwaliteit in: "+dataObj['place']+"</h3>";
 
 
-    for (const [key, value] of Object.entries(dataObj)) {
 
-        if(key == 'place'){
-            continue;
-        }
+
+    for (const [key, value] of Object.entries(dataObj['waterData'])) {
 
         console.log(`${key}: ${value}`);
 
