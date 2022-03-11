@@ -165,7 +165,15 @@ function getLocation() {
 
 function usePosition(position){
     let location = latLongToVector3(position.coords.latitude,position.coords.longitude,1,0.00002)
-    addModel(location,'male_standing.glb',0.03,{test:'test'},90,20)
+    addModel(location,'male_standing.glb',0.03,
+    {
+        "place": "Jouw Buurt",
+        "temperature": 100,
+        "ph": 6,
+        "kalkpercentage": 20,
+        "chloorpercentage": 0
+    }
+    ,90,20)
 }
 
 function latLongToVector3(lat, lon, radius, heigth) {
@@ -314,7 +322,7 @@ function displayData(dataObj){
 
         console.log(`${key}: ${value}`);
 
-        let bar = '<div class="w3-dark-grey">'+
+        let bar = `<h4>${key}</h4> <div class="w3-dark-grey">`+
             '<div class="w3-container w3-green w3-center" style="width:'+ value +'%">'+ value +'</div>'+
         '</div><br>';
 
